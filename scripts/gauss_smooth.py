@@ -8,6 +8,11 @@ import scipy.stats
 from scipy.stats import norm
 from scipy.ndimage.filters import gaussian_filter
 
+'''
+Using a list of start and end points from paired-end reads, generate a gaussian
+distribution around each pair's midpoint. Output can be formatted as bedgraph file
+'''
+
 def gauss_smooth(start, end, reads, bandwidth, chrLength, normR=1, *weights):
     if(len(start) != len(end) or len(start) != reads):
         print("Read/start/end count mismatch")
@@ -15,6 +20,7 @@ def gauss_smooth(start, end, reads, bandwidth, chrLength, normR=1, *weights):
 
     spread = 6*bandwidth
     half_spread = bandwidth*3
+
 
     counts = np.bincount((start+end)//2)
 
