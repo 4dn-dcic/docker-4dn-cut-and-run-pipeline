@@ -32,7 +32,7 @@ RUN apt-get update -y && apt-get install -y \
 WORKDIR /usr/local/bin
 ENV PATH=/usr/local/bin/:$PATH
 
-RUN pip3 install numpy
+RUN pip3 install numpy==1.18.5
 COPY downloads.sh . 
 RUN chmod +x downloads.sh && \
     . downloads.sh && \
