@@ -49,7 +49,13 @@ inputs:
     default: 4
 
 outputs:
-  out_bedgaph:
+  out_bam:
+    fdn_format: "bam"
+    fdn_output_type: "processed"
+    outputSource: "bowtie2/out_bam"
+    type: "File?"
+
+  out_bedgraph:
     fdn_format: "bedpe"
     fdn_output_type: "processed"
     outputSource: "viz/out_bedgraph"
@@ -60,7 +66,6 @@ outputs:
     fdn_output_type: "processed"
     outputSource: "viz/out_bw"
     type: "File?"
-
 
 steps:
   fastq_merge_1:
@@ -75,8 +80,8 @@ steps:
           fdn_format: "fastq"
           source: "input_fastqs_R1"
       out:
-        fastq_merge_1/out_fastq
-          arg_name: "out_fastq"
+        fastq_merge_1/merged_fastq:
+          arg_name: "merged_fastq"
           fdn_format: "fastq"
       run: "fastq-merge.cwl"
 
@@ -90,10 +95,10 @@ steps:
         fastq_merge_2/fastq:
           arg_name: "fastqs"
           fdn_format: "fastq"
-          source: "input_fastqs_R1"
+          source: "input_fastqs_R2"
       out:
-        fastq_merge_2/out_fastq
-          arg_name: "out_fastq"
+        fastq_merge_2/merged_fastq:
+          arg_name: "merged_fastq"
           fdn_format: "fastq"
       run: "fastq-merge.cwl"
 
@@ -104,35 +109,28 @@ steps:
       description: "Trimming the fastq files"
       software_used: "Trimmomatic_0.36"
       in:
-        trim/fastq1
+        trim/fastq1:
           arg_name: "fastq1"
           fdn_format: "fastq"
-          source: "fastq_merge_1/outfastq"
+          source: "fastq_merge_1/merged_fastq"
         
-        trim/fastq2
+        trim/fastq2:
           arg_name: "fastq2"
           fdn_format: "fastq"
-          source: "fastq_merge_2/outfastq"
+          source: "fastq_merge_2/merged_fastq"
       
         trim/threads:
           arg_name: "threads"
           source: "nthreads_trim"
       out:
-        trim/pairout1
+        trim/pairout1:
           arg_name: "pairout1"
           fdn_format: "fastq"
 
-        trim/upairout1
-          arg_name: "upairout1"
-          fdn_format: "fastq"
-
-        trim/pairout2
+        trim/pairout2:
           arg_name: "pairout2"
           fdn_format: "fastq"
         
-        trim/upairout2
-          arg_name: "upairout2"
-          fdn_format: "fastq"
       run: "trim.cwl"
     
   bowtie2:
@@ -142,27 +140,27 @@ steps:
       description: "Aligning the fastq files"
       software_used: "Bowtie_2.2.6"
       in:
-        bowtie2/fastq1
+        bowtie2/fastq1:
           arg_name: "fastq1"
           fdn_format: "fastq"
           source: "trim/pairout1"
         
-        bowtie2/fastq2
+        bowtie2/fastq2:
           arg_name: "fastq2"
           fdn_format: "fastq"
           source: "trim/pairout2"
       
-        bowtie2/index
+        bowtie2/index:
           arg_name: "index"
-          fdn_format: "fastq"
+          fdn_format: "uncompressed_bowtie2Index"
           source: "bowtie2_index"
 
-        bowtie2/threads
+        bowtie2/threads:
           arg_name: "threads"
           source: "nthreads_aln"
 
       out:
-        bowtie2/out_bam
+        bowtie2/out_bam:
           arg_name: "out_bam"
           fdn_format: "bam"
       run: "bowtie2.cwl"
@@ -173,16 +171,16 @@ steps:
         "merging"
         "sorting"
       description: "Converting bam into bedpe, merging and sorting"
-      software_used: "beddtools_2.29.0"
+      software_used: "bedtools_2.29.0"
       in:
-        merge_bamtobed/bams
+        merge_bamtobed/bams:
           arg_name: "bams"
           fdn_format: "bam"
           source: "bowtie2/out_bam"
       out:
-        merge_bamdtobed/out_bedpe
+        merge_bamdtobed/out_bedpe:
           arg_name: "out_bedpe"
-          fdn_format: "bed"
+          fdn_format: "bedpe"
       run: "merge_bamtobed.cwl"
   
   viz:
@@ -192,7 +190,7 @@ steps:
       description: "Generating coverage tracks"
       software_used: "bedGraphToBigWig"
       in:
-        viz/bedpe
+        viz/bedpe:
           arg_name: "bedpe"
           fdn_format: "bedpe"
           source: "merge_bamtobed/out_bedpe"
@@ -203,13 +201,13 @@ steps:
           source: "chr_sizes"
       
       out:
-        viz/out_bedgraph
+        viz/out_bedgraph:
           arg_name: "out_bedgraph"
-          fdn_format: "bedgraph"
+          fdn_format: "bg"
 
-        viz/out_bw
+        viz/out_bw:
           arg_name: "out_bw"
-          fdn_format: "bigwig"
+          fdn_format: "bw"
 
       run: "viz.cwl"
 

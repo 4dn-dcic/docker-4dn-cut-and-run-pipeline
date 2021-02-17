@@ -34,7 +34,7 @@ inputs:
       type: "array"
 
 outputs:
-  out_fastq:
+  merged_fastq:
     type: "File?"
     outputBinding:
       glob: "*.fastq.gz"
