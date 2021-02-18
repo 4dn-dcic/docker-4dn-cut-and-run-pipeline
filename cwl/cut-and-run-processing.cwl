@@ -13,7 +13,7 @@ requirements:
 fdn_meta:
   category: "filter"
   data_types:
-      - "CUT&RUN"
+    - "CUT&RUN"
   description: "This is a subworkflow of the CUT&RUN processing pipeline. It takes in fastqs as input and performs merging, trimming, alignment, sorting, and creates coverage tracks. It produces a bedpe and a bigwig file."
   name: "cut-and-run-processing"
   title: "CUT&RUN Primary Processing"
@@ -170,8 +170,8 @@ steps:
   merge_bamtobed:
     fdn_step_meta:
       analysis_step_types:
-        "merging"
-        "sorting"
+        - "merging"
+        - "sorting"
       description: "Converting bam into bedpe, merging and sorting"
       software_used: "bedtools_2.29.0"
     in:
