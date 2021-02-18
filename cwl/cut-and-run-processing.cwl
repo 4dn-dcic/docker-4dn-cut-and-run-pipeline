@@ -12,12 +12,12 @@ requirements:
 
 fdn_meta:
   category: "filter"
-    data_types:
+  data_types:
       - "CUT&RUN"
-    description: "This is a subworkflow of the CUT&RUN processing pipeline. It takes in fastqs as input and performs merging, trimming, alignment, sorting, and creates coverage tracks. It produces a bedpe and a bigwig file."
-    name: "cut-and-run-processing"
-    title: "CUT&RUN Primary Processing"
-    workflow_type: "CUT&RUN data analysis"
+  description: "This is a subworkflow of the CUT&RUN processing pipeline. It takes in fastqs as input and performs merging, trimming, alignment, sorting, and creates coverage tracks. It produces a bedpe and a bigwig file."
+  name: "cut-and-run-processing"
+  title: "CUT&RUN Primary Processing"
+  workflow_type: "CUT&RUN data analysis"
 
 inputs:
   input_fastqs_R1:
