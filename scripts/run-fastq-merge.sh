@@ -23,10 +23,9 @@ do
 
 if [[ $f =~ \.gz$ ]]
 then
-    cp $f a_fastq$f
-    gunzip -f a_fastq$f
+    gunzip -cf $f > ${f%".gz"}.tmp
     tmp_files=1
-    fastq1=a_fastq${f%".gz"}
+    fastq1=${f%".gz"}.tmp
 else
     fastq1=$f
 fi
@@ -40,6 +39,9 @@ cat $unzipped | gzip -f > $outdir/${outname}.fastq.gz
 # remove temporary files
 if [[ $tmp_files ]]
 then
-    rm a_fastq*
+    for f in $fastqs
+    do
+        rm -f ${f%".gz"}.tmp
+    done
 fi
 
