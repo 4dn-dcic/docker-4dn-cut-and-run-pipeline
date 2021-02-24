@@ -9,6 +9,8 @@ requirements:
 
 - class: "DockerRequirement"
   dockerPull: "4dndcic/cut-and-run-pipeline:v1"
+- class: "ScatterFeatureRequirement"
+
 
 fdn_meta:
   category: "filter"
@@ -20,196 +22,230 @@ fdn_meta:
   workflow_type: "CUT&RUN data analysis"
 
 inputs:
-  input_fastqs_R1:
+  -
     fdn_format: "fastq"
+    id: "#input_fastqs_R1"
     type: 
       -
         items: "File"
         type: "array"
 
-  input_fastqs_R2:
+  -
     fdn_format: "fastq"
+    id: "#input_fastqs_R2"
     type: 
       -
         items: "File"
         type: "array"
 
-  chr_sizes:
+  -
     fdn_format: "chromsizes"
+    id: "#chr_sizes"
     type: "File"
 
-  bowtie2_index:
+  -
     fdn_format: "bowtie2_index"
+    id: "#bowtie2_index"
     type: "File"
 
-  nthreads_trim:
+  -
     type: "int"
+    id: "#nthreads_trim"
     default: 4
 
-  nthreads_aln:
+  -
     type: "int"
+    id: "#nthreads_aln"
     default: 4
 
 outputs:
-  out_bam:
+  -
     fdn_format: "bam"
     fdn_output_type: "processed"
-    outputSource: "bowtie2/out_bam"
+    id: "#out_bam"
+    outputSource: "#bowtie2/out_bam"
     type: "File?"
 
-  out_bedgraph:
+  -
     fdn_format: "bedpe"
     fdn_output_type: "processed"
-    outputSource: "viz/out_bedgraph"
+    id: "#out_bedgraph"
+    outputSource: "#viz/out_bedgraph"
     type: "File?"
 
-  out_bw:
+  -
     fdn_format: "bigwig"
     fdn_output_type: "processed"
-    outputSource: "viz/out_bw"
+    id: "#out_bw"
+    outputSource: "#viz/out_bw"
     type: "File?"
 
 steps:
-  fastq_merge_1:
+  -
     fdn_step_meta:
       analysis_step_types:
-        "merging"
+        - "merging"
       description: "Merging the fastq files"
-      software_used: ""
+    id: "#fastq_merge_1"
     in:
-      fastq_merge_1/fastq:
+      -
         arg_name: "fastqs"
         fdn_format: "fastq"
-        source: "input_fastqs_R1"
+        id: "#fastq_merge_1/fastq"
+        source: "#input_fastqs_R1"
     out:
-      fastq_merge_1/merged_fastq:
+      -
         arg_name: "merged_fastq"
         fdn_format: "fastq"
+        id: "#fastq_merge_1/merged_fastq"
     run: "fastq-merge.cwl"
 
-  fastq_merge_2:
+  -
     fdn_step_meta:
       analysis_step_types:
         "merging"
       description: "Merging the second set of fastq files"
       software_used: ""
+    id: "#fastq_merge_2"
     in:
-      fastq_merge_2/fastq:
+      -
         arg_name: "fastqs"
         fdn_format: "fastq"
-        source: "input_fastqs_R2"
+        id: "#fastq_merge_2/fastq"
+        source: "#input_fastqs_R2"
     out:
-      fastq_merge_2/merged_fastq:
+      -
         arg_name: "merged_fastq"
         fdn_format: "fastq"
+        id: "#fastq_merge_2/merged_fastq"
     run: "fastq-merge.cwl"
 
-  trim:
+  -
     fdn_step_meta:
       analysis_step_types:
         "trimming"
       description: "Trimming the fastq files"
       software_used: "Trimmomatic_0.36"
+    id: "#trim"
     in:
-      trim/fastq1:
+      -
         arg_name: "fastq1"
         fdn_format: "fastq"
-        source: "fastq_merge_1/merged_fastq"
+        id: "#trim/fastq1"
+        source: "#fastq_merge_1/merged_fastq"
         
-      trim/fastq2:
+      -
         arg_name: "fastq2"
         fdn_format: "fastq"
-        source: "fastq_merge_2/merged_fastq"
+        id: "#trim/fastq2"
+        source: "#fastq_merge_2/merged_fastq"
       
-      trim/threads:
+      -
         arg_name: "threads"
-        source: "nthreads_trim"
+        id: "#trim/threads"
+        source: "#nthreads_trim"
     out:
-      trim/pairout1:
+      -
         arg_name: "pairout1"
         fdn_format: "fastq"
+        id: "#trim/pairout1"
 
-      trim/pairout2:
+      -
         arg_name: "pairout2"
         fdn_format: "fastq"
+        id: "#trim/pairout2"
         
     run: "trim.cwl"
     
-  bowtie2:
+  -
     fdn_step_meta:
       analysis_step_types:
         "alignment"
       description: "Aligning the fastq files"
       software_used: "Bowtie_2.2.6"
+    id: "#bowtie2"
     in:
-      bowtie2/fastq1:
+      -
         arg_name: "fastq1"
         fdn_format: "fastq"
-        source: "trim/pairout1"
+        id: "#bowtie2/fastq1"
+        source: "#trim/pairout1"
         
-      bowtie2/fastq2:
+      -
         arg_name: "fastq2"
         fdn_format: "fastq"
-        source: "trim/pairout2"
+        id: "#bowtie2/fastq2"
+        source: "#trim/pairout2"
       
-      bowtie2/index:
+      -
         arg_name: "index"
         fdn_format: "uncompressed_bowtie2Index"
-        source: "bowtie2_index"
+        id: "#bowtie2/index"
+        source: "#bowtie2_index"
 
-      bowtie2/threads:
+      -
         arg_name: "threads"
-        source: "nthreads_aln"
+        id: "#bowtie2/threads"
+        source: "#nthreads_aln"
 
     out:
-      bowtie2/out_bam:
+      -
         arg_name: "out_bam"
         fdn_format: "bam"
+        id: "#bowtie2/out_bam"
     run: "bowtie2.cwl"
   
-  merge_bamtobed:
+  -
     fdn_step_meta:
       analysis_step_types:
         - "merging"
         - "sorting"
       description: "Converting bam into bedpe, merging and sorting"
       software_used: "bedtools_2.29.0"
+    id: "#merge_bamtobed"
     in:
-      merge_bamtobed/bams:
+      -
         arg_name: "bams"
         fdn_format: "bam"
-        source: "bowtie2/out_bam"
+        id: "#merge_bamtobed/bams"
+        source: "#bowtie2/out_bam"
     out:
-      merge_bamdtobed/out_bedpe:
+      -
         arg_name: "out_bedpe"
         fdn_format: "bedpe"
-    run: "merge_bamtobed.cwl"
+        id: "#merge_bamtobed/out_bedpe"
+    run: "merge-bamtobed.cwl"
   
-  viz:
+  -
     fdn_step_meta:
       analysis_step_types:
         "coverage"
       description: "Generating coverage tracks"
       software_used: "bedGraphToBigWig"
+    id: "#viz"
     in:
-      viz/bedpe:
+      -
         arg_name: "bedpe"
         fdn_format: "bedpe"
-        source: "merge_bamtobed/out_bedpe"
+        id: "#viz/bedpe"
+        source: "#merge_bamtobed/out_bedpe"
         
-      viz/chr_sizes:
+      -
         arg_name: "chr_sizes"
         fdn_format: "chromsizes"
-        source: "chr_sizes"
+        id: "#viz/chr_sizes"
+        source: "#chr_sizes"
       
     out:
-      viz/out_bedgraph:
+      -
         arg_name: "out_bedgraph"
         fdn_format: "bg"
+        id: "#viz/out_bedgraph"
 
-      viz/out_bw:
+      -
         arg_name: "out_bw"
         fdn_format: "bw"
+        id: "#viz/out_bw"
 
     run: "viz.cwl"
 
