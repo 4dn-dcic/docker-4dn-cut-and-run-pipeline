@@ -24,7 +24,7 @@ inputs:
 
   index:
     type: "File"
-    inputBinding"
+    inputBinding:
       position: 3
 
   threads:
@@ -47,7 +47,9 @@ inputs:
 
 outputs:
   out_bam:
-    type: "File?"
+    type:
+      items: "File"
+      type: "array"
     outputBinding:
       glob: "*.bam"
 

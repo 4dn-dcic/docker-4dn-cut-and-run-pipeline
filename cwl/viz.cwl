@@ -19,7 +19,7 @@ inputs:
 
   chr_sizes:
     type: "File"
-    inputBinding"
+    inputBinding:
       position: 2
 
   base_direc:
