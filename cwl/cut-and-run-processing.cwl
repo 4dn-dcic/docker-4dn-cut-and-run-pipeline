@@ -6,10 +6,7 @@ cwlVersion: v1.0
 requirements:
 - class: "InlineJavascriptRequirement"
 
-- class: "DockerRequirement"
-  dockerPull: "4dndcic/cut-and-run-pipeline:v1"
 - class: "ScatterFeatureRequirement"
-
 
 inputs:
   -
