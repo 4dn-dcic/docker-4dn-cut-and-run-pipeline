@@ -23,14 +23,13 @@ do
 
 if [[ $f =~ \.gz$ ]]
 then
-    cp $f a_bam_$f
-    gunzip -f a_bam_$f
+    gunzip -cf $f > ${f%".gz"}_tmp.bam
     tmp_files=1
-    bam1=a_bam_${f%".gz"}
+    bam1=${f%"bam.gz"}_tmp.bam
 else
     bam1=$f
 fi
-bed1="tmp_${bam1%.bam}.bed"
+bed1="${bam1%.bam}_tmp.bed"
 bedtools bamtobed -bedpe -i $bam1 > $bed1
 unzipped=$unzipped" $bed1"
 done
@@ -39,9 +38,9 @@ done
 awk '$1==$4 && $1!="." && $6-$2 < 1000 {print $0}' $unzipped | cut -f 1,2,6 | sort -k1,1 -k2,2n -k3,3n | gzip -f > $outdir/${outname}.bedpe.gz
 
 # remove temporary files
-rm tmp_*.bed
+rm -f *_tmp.bed
 
 if [[ $tmp_files ]]
 then
-    rm a_bam_*
+    rm -f *_tmp.bam
 fi
