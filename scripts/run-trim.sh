@@ -17,5 +17,5 @@ else
 fi
 
 # run trimmers
-java -jar /usr/local/bin/Trimmomatic-0.36/trimmomatic-0.36.jar PE -threads $threads $fastq1 $fastq2 -baseout $outdir/$outname.fastq.gz ILLUMINACLIP:/usr/local/bin/Trimmomatic-0.36/adapters/Truseq3.PE.fa:2:15:4:1:true MINLEN:20
+java -jar /usr/local/bin/Trimmomatic-0.36/trimmomatic-0.36.jar PE -threads $threads $fastq1 $fastq2 -baseout $outdir/$outname.fastq.gz ILLUMINACLIP:/usr/local/bin/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:15:4:1:true MINLEN:20
 
