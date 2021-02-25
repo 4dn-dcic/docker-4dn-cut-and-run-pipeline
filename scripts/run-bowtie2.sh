@@ -44,5 +44,5 @@ fi
 bowtie2 --dovetail -threads $threads x $index -1 $fastq1 -2 $fastq2 > $outdir/${outname}.bam
 
 # remove temporary files
-rm $fastq1
-rm $fastq2
+rm -f $fastq1
+rm -f $fastq2
