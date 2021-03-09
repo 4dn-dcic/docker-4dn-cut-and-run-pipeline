@@ -17,7 +17,7 @@ else
     outdir='.'
 fi
 
-tar -xzf $index
+tar -xvf $index
 index=`ls -1 *.bt2 | head -1 | sed 's/.1.bt2//'`
 
 tmp1=""

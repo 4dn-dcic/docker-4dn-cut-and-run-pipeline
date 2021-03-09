@@ -23,7 +23,7 @@ inputs:
       position: 2
 
   base_direc:
-    type: "int"
+    type: "string?"
     inputBinding:
       position: 3
     default: ""
