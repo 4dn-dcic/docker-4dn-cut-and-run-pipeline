@@ -1,5 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Clara Bakker
+
 import sys
 import math
 import numpy as np

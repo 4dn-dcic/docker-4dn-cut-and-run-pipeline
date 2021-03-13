@@ -23,16 +23,17 @@ RUN apt-get update -y && apt-get install -y \
    libxml2-dev \
    libxslt-dev
 
-
 RUN apt-get update -y && apt-get install -y \
     python3.5-dev \
     python3-setuptools \
-    python3-pip
+    && wget https://bootstrap.pypa.io/pip/3.5/get-pip.py \
+    && python3.5 get-pip.py
 
 WORKDIR /usr/local/bin
 ENV PATH=/usr/local/bin/:$PATH
 
 RUN pip3 install numpy==1.18.5
+RUN pip3 install scipy==1.4
 COPY downloads.sh . 
 RUN chmod +x downloads.sh && \
     . downloads.sh && \
