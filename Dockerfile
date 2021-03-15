@@ -40,6 +40,6 @@ RUN chmod +x downloads.sh && \
     rm /usr/local/bin/downloads.sh
 
 COPY scripts/ .
-RUN chmod +x run*.sh
+RUN chmod +x run*.sh *gauss*
 
 # CMD ["run-cut-and-run.sh"]

@@ -54,6 +54,6 @@ if __name__ == "__main__":
     parser.add_argument("--in_bedpe", type=str, help="path/to/input.bedpe")
     parser.add_argument("--chr_sizes", type=str, help="path/to/chrom.sizes")
     parser.add_argument("--outname", type=str, help="path/to/outname.bedgraph")
-    parser.add_argument("--base_direc", type=str, help="optional base directory prepended to ALL files")
+    parser.add_argument("--base_direc", type=str, nargs="?", default="", help="optional base directory prepended to ALL files")
     args = parser.parse_args()
     main(args)
