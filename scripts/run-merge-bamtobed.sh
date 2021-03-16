@@ -4,7 +4,7 @@ outname=$1
 outdir=$2
 shift 2
 bams=${@}
-
+echo $bams
 if [[ $outdir ]]
 then
     if [[ ! -d $outdir && $outdir != '.' ]]
@@ -30,12 +30,12 @@ else
     bam1=$f
 fi
 bed1="${bam1%.bam}_tmp.bed"
-bedtools bamtobed -bedpe -i $bam1 > $bed1
+bedtools bamtobed -i $bam1 -bedpe > $bed1
 unzipped=$unzipped" $bed1"
 done
 
 # clean, sort, and merge all
-awk '$1==$4 && $1!="." && $6-$2 < 1000 {print $0}' $unzipped | cut -f 1,2,6 | sort -k1,1 -k2,2n -k3,3n | gzip -f > $outdir/${outname}.bedpe.gz
+awk '$1==$4 && $1!="." && $6-$2 < 1000 {print $0}' $unzipped | cut -f 1-6 | sort -k1,1 -k2,2n -k3,3n | gzip -f > $outdir/${outname}.bedpe.gz
 
 # remove temporary files
 rm -f *_tmp.bed

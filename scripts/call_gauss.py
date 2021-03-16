@@ -7,7 +7,7 @@ import gauss_smooth as gs
 from operator import itemgetter
 
 def main(args):
-    direc = args.base_direc
+    direc = str(args.base_direc or '')
     in_file = direc + args.in_bedpe
     chr_sizes = direc + args.chr_sizes
     out = direc + args.outname
