@@ -47,8 +47,7 @@ inputs:
 
 outputs:
   out_bam:
-    type:
-      items: "File"
+    type: "File?"
     outputBinding:
       glob: "*.bam"
 

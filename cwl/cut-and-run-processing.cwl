@@ -47,8 +47,7 @@ outputs:
   -
     id: "#out_bam"
     outputSource: "#bowtie2/out_bam"
-    type:
-      items: "File"
+    type: "File?"
   -
     id: "#out_bedgraph"
     outputSource: "#viz/out_bedgraph"
