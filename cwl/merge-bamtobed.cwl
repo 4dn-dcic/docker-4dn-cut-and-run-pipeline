@@ -24,14 +24,10 @@ inputs:
       position: 2
     default: "."
 
-  bams:
+  bam:
     inputBinding:
-      itemSeparator: " "
       position: 3
-      separate: true
-    type:
-      items: "File"
-      type: "array"
+    type: "File"
 
 outputs:
   out_bedpe:

@@ -47,7 +47,7 @@ outputs:
   -
     id: "#out_bam"
     outputSource: "#bowtie2/out_bam"
-    type: "File?"
+    type: "File"
   -
     id: "#out_bedgraph"
     outputSource: "#viz/out_bedgraph"
@@ -132,7 +132,7 @@ steps:
     id: "#merge_bamtobed"
     in:
       -
-        id: "#merge_bamtobed/bams"
+        id: "#merge_bamtobed/bam"
         source: "#bowtie2/out_bam"
     out:
       -
