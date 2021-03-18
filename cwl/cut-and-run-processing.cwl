@@ -49,7 +49,6 @@ outputs:
     outputSource: "#bowtie2/out_bam"
     type:
       items: "File"
-      type: "array"
   -
     id: "#out_bedgraph"
     outputSource: "#viz/out_bedgraph"

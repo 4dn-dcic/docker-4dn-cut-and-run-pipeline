@@ -49,7 +49,6 @@ outputs:
   out_bam:
     type:
       items: "File"
-      type: "array"
     outputBinding:
       glob: "*.bam"
 
