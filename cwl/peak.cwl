@@ -11,12 +11,12 @@ requirements:
 - class: "InlineJavascriptRequirement"
 
 inputs:
-  bedgr:
+  input_bg:
     type: "File"
     inputBinding:
       position: 1
 
-  control:
+  input_bg_ctl:
     type: "File"
     inputBinding:
       position: 2
