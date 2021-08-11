@@ -17,5 +17,29 @@ else
     outdir='.'
 fi
 
+# unzip fastq files
+if [[ $bedgr =~ \.gz$ ]]
+then
+    cp $bedgr bedgr_tmp.bedgraph.gz
+    gunzip bedgr_tmp.bedgraph.gz
+else
+    cp $bedgr bedgr_tmp.bedgraph
+fi
+    bedgr=bedgr_tmp.bedgraph
+
+if [[ $control =~ \.gz$ ]]
+then
+    cp $control control_tmp.bedgraph.gz
+    gunzip control_tmp.bedgraph.gz
+else
+    cp $control control_tmp.bedgraph
+fi
+    control=control_tmp.bedgraph
+
+
 # call SEACR with given settings
-/usr/local/bin/SEACR/SEACR_1.3.sh ${bedgr}.bedgraph $control.bedgraph $norm $stringency $outdir/$out.$norm.peaks
+/usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks
+
+# remove temporary files
+rm -f $bedgr
+rm -f $control

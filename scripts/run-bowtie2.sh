@@ -20,14 +20,11 @@ fi
 tar -xvf $index
 index=`ls -1 *.bt2 | head -1 | sed 's/.1.bt2//'`
 
-tmp1=""
-tmp2=""
 # unzip fastq files
 if [[ $fastq1 =~ \.gz$ ]]
 then
     cp $fastq1 fastq1.gz
     gunzip fastq1.gz
-    tmp1=1
 else
     cp $fastq1 fastq1
 fi
@@ -37,7 +34,6 @@ if [[ $fastq2 =~ \.gz$ ]]
 then
     cp $fastq2 fastq2.gz
     gunzip fastq2.gz
-    tmp2=1
 else
     cp $fastq2 fastq2
 fi
