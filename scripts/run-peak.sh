@@ -18,4 +18,4 @@ else
 fi
 
 # call SEACR with given settings
-SEACR/SEACR_1.3.sh ${bedgr}.bedgraph $control.bedgraph $norm $stringency $outdir/$out.$norm.peaks
+/usr/local/bin/SEACR/SEACR_1.3.sh ${bedgr}.bedgraph $control.bedgraph $norm $stringency $outdir/$out.$norm.peaks
