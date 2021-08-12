@@ -7,6 +7,9 @@ stringency=$4
 out=$5
 outdir=$6
 
+two_bgs=false
+two_ctls=false
+
 if [[ $outdir ]]
 then
     if [[ ! -d $outdir && $outdir != '.' ]]
@@ -17,29 +20,38 @@ else
     outdir='.'
 fi
 
-# unzip fastq files
+# unzip bg files
 if [[ $bedgr =~ \.gz$ ]]
 then
-    cp $bedgr bedgr_tmp.bedgraph.gz
-    gunzip bedgr_tmp.bedgraph.gz
-else
-    cp $bedgr bedgr_tmp.bedgraph
+    two_bgs=true
+    if ! gunzip -k $bedgr
+    then
+        echo "Bedgraph data file with extension .gz is not gzipped."
+        cp $bedgr ${bedgr%.gz}
+    fi
+    bedgr=${bedgr%.gz}
 fi
-    bedgr=bedgr_tmp.bedgraph
 
 if [[ $control =~ \.gz$ ]]
 then
-    cp $control control_tmp.bedgraph.gz
-    gunzip control_tmp.bedgraph.gz
-else
-    cp $control control_tmp.bedgraph
+    two_ctls=true
+    if ! gunzip -k $control
+    then
+        echo "Bedgraph control file with extension .gz is not gzipped"
+        cp $control ${control%.gz}
+    fi
+    control=${control%.gz}
 fi
-    control=control_tmp.bedgraph
-
 
 # call SEACR with given settings
 /usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks
 
 # remove temporary files
-rm -f $bedgr
-rm -f $control
+if $two_bgs
+then
+    rm -f $bedgr
+fi
+if $two_ctls
+then
+    rm -f $control
+fi
