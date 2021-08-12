@@ -45,7 +45,7 @@ fi
 
 # call SEACR with given settings
 /usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks
-gzip -f $outdir/$out.$norm.peaks
+gzip -f $outdir/$out.$norm.peaks.$stringency.bed
 
 # remove temporary files
 if $two_bgs

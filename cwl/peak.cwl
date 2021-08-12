@@ -47,7 +47,7 @@ outputs:
   out_bedg:
     type: "File?"
     outputBinding:
-      glob: *$(inputs:norm).bedgraph.gz
+      glob: *peaks.$(inputs:stringency).bed.gz
 
 baseCommand:
  - "run-peak.sh"
