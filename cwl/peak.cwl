@@ -47,7 +47,7 @@ outputs:
   out_bedg:
     type: "File?"
     outputBinding:
-      glob: *peaks.$(inputs:stringency).bed.gz
+      glob: "*.bed.gz"
 
 baseCommand:
  - "run-peak.sh"
