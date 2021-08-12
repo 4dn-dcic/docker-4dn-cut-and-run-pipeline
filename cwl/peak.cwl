@@ -8,8 +8,6 @@ requirements:
 - class: DockerRequirement
   dockerPull: "4dndcic/cut-and-run-pipeline:v1"
 
-- class: "InlineJavascriptRequirement"
-
 inputs:
   input_bg:
     type: "File"
@@ -49,7 +47,7 @@ outputs:
   out_bedg:
     type: "File?"
     outputBinding:
-      glob: "*.bed"
+      glob: *$(inputs:norm).bedgraph.gz
 
 baseCommand:
  - "run-peak.sh"

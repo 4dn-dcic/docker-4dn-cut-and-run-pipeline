@@ -8,8 +8,6 @@ requirements:
 - class: DockerRequirement
   dockerPull: "4dndcic/cut-and-run-pipeline:v1"
 
-- class: "InlineJavascriptRequirement"
-
 inputs:
 
   bedpe:
@@ -44,7 +42,7 @@ outputs:
   out_bedgraph:
     type: "File?"
     outputBinding:
-      glob: "*.bedgraph"
+      glob: "*.bedgraph.gz"
 
   out_bw:
     type: "File?"
