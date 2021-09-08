@@ -6,6 +6,7 @@ norm=$3
 stringency=$4
 out=$5
 outdir=$6
+err=$7
 
 two_bgs=false
 two_ctls=false
@@ -44,7 +45,7 @@ then
 fi
 
 # call SEACR with given settings
-/usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks
+/usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks > $err.txt
 gzip -f $outdir/$out.$norm.peaks.$stringency.bed
 
 # remove temporary files
