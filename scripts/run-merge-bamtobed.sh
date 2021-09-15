@@ -29,8 +29,22 @@ then
 else
     bam1=$f
 fi
+
+# sort bams
+java -Xmx2G -jar /usr/local/bin/picard.jar SortSam INPUT=$bam1 OUTPUT=$outdir/$outname.sorted.tmp.bam VALIDATION_STRINGENCY=LENIENT SORT_ORDER=coordinate
+
+# mark duplicates
+java -Xmx2G -jar /usr/local/bin/picard.jar MarkDuplicates INPUT=$outdir/$outname.sorted.tmp.bam OUTPUT=$outdir/$outname.markdup.tmp.bam METRICS_FILE=$outdir/$outname.dup.qc VALIDATION_STRINGENCY=LENIENT
+
+# remove duplicates and clean up
+/usr/local/bin/samtools/samtools view -F 1024 -f 2 -b $outdir/$outname.markdup.tmp.bam > $outdir/$outname.dedup.tmp.bam
+
+# re-sort by name for bamtobed
+/usr/local/bin/samtools/samtools sort -n $outdir/$outname.dedup.tmp.bam > $outdir/$outname.dedup.sorted.tmp.bam
+
+# convert to bedfile
 bed1="${bam1%.bam}_tmp.bed"
-bedtools bamtobed -i $bam1 -bedpe > $bed1
+bedtools bamtobed -i $outdir/$outname.dedup.sorted.tmp.bam -bedpe > $bed1
 unzipped=$unzipped" $bed1"
 done
 

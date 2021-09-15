@@ -22,6 +22,14 @@ chmod +x bedGraphToBigWig
 wget https://github.com/BenLangmead/bowtie2/releases/download/v2.2.6/bowtie2-2.2.6-linux-x86_64.zip
 unzip bowtie2-2.2.6-linux-x86_64.zip && mv bowtie2*/bowtie2* . && rm -rf bowtie2-2.2.6*
 
+## SOFTWARE: Picard
+## VERSION: 2.20.7
+## TYPE: Duplicate removal
+## SOURCE_URL: https://github.com/broadinstitute/picard
+wget https://github.com/broadinstitute/picard/releases/download/2.20.7/picard.jar
+chmod +x picard.jar
+
+
 ## SOFTWARE: samtools
 ## VERSION: 1.9
 ## TYPE: file format conversion

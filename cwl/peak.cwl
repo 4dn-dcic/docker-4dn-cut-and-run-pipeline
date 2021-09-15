@@ -43,22 +43,11 @@ inputs:
       position: 6
     default: "."
 
-  err:
-    type: "string"
-    inputBinding:
-      position: 7
-    default: "peak_report"
-
 outputs:
   out_bedg:
     type: "File?"
     outputBinding:
       glob: "*.bed.gz"
-
-  peak_report:
-    type: "File?"
-    outputBinding:
-      glob: "*.txt"
 
 baseCommand:
  - "run-peak.sh"
