@@ -49,13 +49,8 @@ outputs:
     outputSource: "#bowtie2/out_bam"
     type: "File"
   -
-    id: "#out_bedgraph"
-    outputSource: "#viz/out_bedgraph"
-    type: "File?"
-
-  -
-    id: "#out_bw"
-    outputSource: "#viz/out_bw"
+    id: "#out_bedpe"
+    outputSource: "#bamtobed/out_bedpe"
     type: "File?"
 
 steps:
@@ -129,33 +124,13 @@ steps:
     run: "bowtie2.cwl"
   
   -
-    id: "#merge_bamtobed"
+    id: "#bamtobed"
     in:
       -
-        id: "#merge_bamtobed/bam"
+        id: "#bamtobed/bam"
         source: "#bowtie2/out_bam"
     out:
       -
-        id: "#merge_bamtobed/out_bedpe"
-    run: "merge-bamtobed.cwl"
-  
-  -
-    id: "#viz"
-    in:
-      -
-        id: "#viz/bedpe"
-        source: "#merge_bamtobed/out_bedpe"
-        
-      -
-        id: "#viz/chr_sizes"
-        source: "#chr_sizes"
-      
-    out:
-      -
-        id: "#viz/out_bedgraph"
-
-      -
-        id: "#viz/out_bw"
-
-    run: "viz.cwl"
-
+        id: "#bamtobed/out_bedpe"
+    run: "bamtobed.cwl"
+ 

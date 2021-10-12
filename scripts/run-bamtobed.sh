@@ -2,9 +2,7 @@
 set -eo pipefail
 outname=$1
 outdir=$2
-shift 2
-bams=${@}
-echo $bams
+bam=$3
 if [[ $outdir ]]
 then
     if [[ ! -d $outdir && $outdir != '.' ]]
@@ -15,19 +13,17 @@ else
     outdir='.'
 fi
 
-# unzip bed files
+# unzip bam file
 unzipped=""
 tmp_files=""
-for f in $bams
-do
 
-if [[ $f =~ \.gz$ ]]
+if [[ $bam =~ \.gz$ ]]
 then
-    gunzip -cf $f > ${f%".gz"}_tmp.bam
+    gunzip -cf $bam > ${bam%".gz"}_tmp.bam
     tmp_files=1
-    bam1=${f%"bam.gz"}_tmp.bam
+    bam1=${bam%"bam.gz"}_tmp.bam
 else
-    bam1=$f
+    bam1=$bam
 fi
 
 # sort bams
@@ -46,9 +42,8 @@ java -Xmx2G -jar /usr/local/bin/picard.jar MarkDuplicates INPUT=$outdir/$outname
 bed1="${bam1%.bam}_tmp.bed"
 bedtools bamtobed -i $outdir/$outname.dedup.sorted.tmp.bam -bedpe > $bed1
 unzipped=$unzipped" $bed1"
-done
 
-# clean, sort, and merge all
+# clean and sort for merging in next step
 awk '$1==$4 && $1!="." && $6-$2 < 1000 {print $0}' $unzipped | cut -f 1-6 | sort -k1,1 -k2,2n -k3,3n | gzip -f > $outdir/${outname}.bedpe.gz
 
 # remove temporary files

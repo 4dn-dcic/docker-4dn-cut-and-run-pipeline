@@ -36,4 +36,4 @@ outputs:
       glob: "*.bedpe.gz"
 
 baseCommand:
- - "run-merge-bamtobed.sh"
+ - "run-bamtobed.sh"
