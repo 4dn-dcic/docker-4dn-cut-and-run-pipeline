@@ -20,22 +20,27 @@ inputs:
     inputBinding:
       position: 2
 
+  is_ctl:
+    type: "boolean"
+    inputBinding:
+      position: 3
+
   base_direc:
     type: "string?"
     inputBinding:
-      position: 3
+      position: 4
     default: ""
 
   outname:
     type: "string?"
     inputBinding:
-      position: 4
+      position: 5
     default: "out"
 
   outdir:
     type: "string"
     inputBinding:
-      position: 5
+      position: 6
     default: "."
 
 outputs:
