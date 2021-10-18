@@ -24,6 +24,7 @@ inputs:
     type: "boolean"
     inputBinding:
       position: 3
+    default: false
 
   base_direc:
     type: "string?"
