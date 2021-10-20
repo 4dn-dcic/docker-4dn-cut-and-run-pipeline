@@ -82,7 +82,7 @@ steps:
     in:
       -
         id: "#viz/bedpe"
-        source: "#bed_merge/merged_bedpe"
+        source: "#bedpe_merge/merged_bedpe"
       -
         id: "#viz/chr_sizes"
         source: "#chr_sizes"
@@ -91,13 +91,13 @@ steps:
         id: "#viz/out_bedgraph"
       -
         id: "#viz/out_bw"
-    run: "run-viz.cwl"
+    run: "viz.cwl"
   -
     id: "#viz_ctl"
     in:
       -
         id: "#viz_ctl/bedpe"
-        source: "#bed_merge_ctl/merged_bedpe"
+        source: "#bedpe_merge_ctl/merged_bedpe"
       -
         id: "#viz/chr_sizes"
         source: "#chr_sizes"
@@ -107,7 +107,7 @@ steps:
     out:
       -
         id: "#viz_ctl/out_ctl_bedgraph"
-    run: "run-viz.cwl"
+    run: "viz.cwl"
   -
     id: "#peak"
     in:
@@ -116,7 +116,7 @@ steps:
         source: "#viz/out_bedgraph"
       -
         id: "#peak/input_bg_ctl"
-        source: "#viz/out_ctl_bedgraph"
+        source: "#viz_ctl/out_ctl_bedgraph"
       -
         id: "#peak/norm"
         source: "#norm"
@@ -126,4 +126,4 @@ steps:
     out:
       -
         id: "#peak/out_bedg"
-    run: "run-peak.sh"
+    run: "peak.cwl"
