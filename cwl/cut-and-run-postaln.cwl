@@ -106,7 +106,9 @@ steps:
         source: "is_ctl"
     out:
       -
-        id: "#viz_ctl/out_ctl_bedgraph"
+        id: "#viz_ctl/out_bedgraph"
+      -
+        id: "#viz/out_bw"
     run: "viz.cwl"
   -
     id: "#peak"
