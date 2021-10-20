@@ -118,7 +118,7 @@ steps:
         source: "#viz/out_bedgraph"
       -
         id: "#peak/input_bg_ctl"
-        source: "#viz_ctl/out_ctl_bedgraph"
+        source: "#viz_ctl/out_bedgraph"
       -
         id: "#peak/norm"
         source: "#norm"
