@@ -24,7 +24,7 @@ if [[ $f =~ \.gz$ ]]
 then
     gunzip -cf $f > ${f%".gz"}_tmp.bedpe
     tmp_files=1
-    bedpe1=${f%"bedpe.gz"}_tmp.bedpe
+    bedpe1=${f%".gz"}_tmp.bedpe
 else
     bedpe1=$f
 fi
