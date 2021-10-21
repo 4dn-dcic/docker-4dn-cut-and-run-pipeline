@@ -2,10 +2,9 @@
 set -eo pipefail
 bedpe=$1
 chr_sizes=$2
-is_ctl=$3
-base_direc=$4
-out=$5
-outdir=$6
+base_direc=$3
+out=$4
+outdir=$5
 
 if [[ $outdir ]]
 then
