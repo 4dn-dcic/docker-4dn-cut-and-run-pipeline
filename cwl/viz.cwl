@@ -20,12 +20,6 @@ inputs:
     inputBinding:
       position: 2
 
-  is_ctl:
-    type: "boolean"
-    inputBinding:
-      position: 3
-    default: false
-
   base_direc:
     type: "string?"
     inputBinding:

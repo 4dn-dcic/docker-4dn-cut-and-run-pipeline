@@ -30,11 +30,6 @@ inputs:
     type: "File"
 
   -
-    id: "#is_ctl"
-    type: "boolean"
-    default: "true"
-
-  -
     id: "#norm"
     type: "string"
     default: "norm"
@@ -101,9 +96,6 @@ steps:
       -
         id: "#viz/chr_sizes"
         source: "#chr_sizes"
-      -
-        id: "#viz/is_ctl"
-        source: "is_ctl"
     out:
       -
         id: "#viz_ctl/out_bedgraph"
