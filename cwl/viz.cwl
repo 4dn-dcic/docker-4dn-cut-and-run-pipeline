@@ -23,19 +23,19 @@ inputs:
   base_direc:
     type: "string?"
     inputBinding:
-      position: 4
+      position: 3
     default: ""
 
   outname:
     type: "string?"
     inputBinding:
-      position: 5
+      position: 4
     default: "out"
 
   outdir:
     type: "string"
     inputBinding:
-      position: 6
+      position: 5
     default: "."
 
 outputs:
