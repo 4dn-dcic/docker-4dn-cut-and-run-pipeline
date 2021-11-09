@@ -30,7 +30,7 @@ fi
 java -Xmx2G -jar /usr/local/bin/picard.jar SortSam INPUT=$bam1 OUTPUT=$outdir/$outname.sorted.tmp.bam VALIDATION_STRINGENCY=LENIENT SORT_ORDER=coordinate
 
 # mark duplicates
-java -Xmx2G -jar /usr/local/bin/picard.jar MarkDuplicates INPUT=$outdir/$outname.sorted.tmp.bam OUTPUT=$outdir/$outname.markdup.tmp.bam METRICS_FILE=$outdir/$outname.dup.qc VALIDATION_STRINGENCY=LENIENT
+java -Xmx2G -jar /usr/local/bin/picard.jar MarkDuplicates INPUT=$outdir/$outname.sorted.tmp.bam OUTPUT=$outdir/$outname.markdup.tmp.bam METRICS_FILE=$outdir/$outname.dup.qc VALIDATION_STRINGENCY=LENIENT READ_NAME_REGEX=null
 
 # remove duplicates and clean up
 /usr/local/bin/samtools/samtools view -F 1024 -f 2 -b $outdir/$outname.markdup.tmp.bam > $outdir/$outname.dedup.tmp.bam

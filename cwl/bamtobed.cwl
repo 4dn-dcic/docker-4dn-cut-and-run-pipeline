@@ -6,7 +6,7 @@ cwlVersion: v1.0
 
 requirements:
 - class: DockerRequirement
-  dockerPull: "4dndcic/cut-and-run-pipeline:v1"
+  dockerPull: "4dndcic/cut-and-run-pipeline:vtest"
 
 - class: "InlineJavascriptRequirement"
 
