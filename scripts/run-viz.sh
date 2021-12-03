@@ -20,9 +20,13 @@ gunzip -k $bedpe
 base=${bedpe%.gz}
 
 # call gaussian smoother
-python3 /usr/local/bin/call_gauss.py --in_bedpe ${base} --chr_sizes $chr_sizes --outname $outdir/$out.bedgraph --base_direc $base_direc
+if ! python3 /usr/local/bin/call_gauss.py --in_bedpe ${base} --chr_sizes $chr_sizes --outname $outdir/$out.bedgraph --base_direc $base_direc; then
+	echo "The gaussian smoother encountered an error"
+fi
 
-/usr/local/bin/bedGraphToBigWig $outdir/$out.bedgraph $chr_sizes $outdir/$out.bw
+if ! /usr/local/bin/bedGraphToBigWig $outdir/$out.bedgraph $chr_sizes $outdir/${out}.bw; then
+	echo "bedGraphToBigWig encountered an error"
+fi
 
 gzip -f $outdir/$out.bedgraph
 

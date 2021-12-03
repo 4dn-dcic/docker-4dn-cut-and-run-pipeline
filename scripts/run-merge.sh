@@ -29,12 +29,19 @@ else
     bedpe1=$f
 fi
 
+# remove chrs that cannot be displayed on HiGlass
+if ! awk '/^chr(X|Y|[0-9]+)/' $bedpe1 > ${bedpe1}_clean; then
+    echo "filtering chrs returned an error"
+fi
+
+# overwrite and add to list
+mv ${bedpe1}_clean $bedpe1
 unzipped="$unzipped $bedpe1"
 
 done
 echo $unzipped
 # clean, sort, and merge all
-sort -m $unzipped | gzip -fc > $outdir/${outname}.bedpe.gz
+sort -m -k1,1 -k2,2n -k3,3n $unzipped | gzip -fc > $outdir/${outname}.bedpe.gz
 
 if [[ $tmp_files ]]
 then

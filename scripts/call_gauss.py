@@ -18,7 +18,7 @@ def main(args):
         sizes = dict([ln.split() for ln in f])
 
     with open(in_file) as f:
-        v = np.loadtxt(f, delimiter='\t', dtype='str', comments='#', skiprows=0, usecols=(0,1,2,3,4,5))
+        v = np.loadtxt(f, delimiter='\t', dtype='U9', comments='#', skiprows=0, usecols=(0,1,2,3,4,5))
     clean_bed = np.empty(shape=[0,6])
     # current chromosome
     chrm_choices = np.unique(v[:,0])

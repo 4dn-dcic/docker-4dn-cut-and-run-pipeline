@@ -47,6 +47,11 @@ outputs:
   out_bedg:
     type: "File?"
     outputBinding:
+      glob: "*.bedgraph.gz"
+
+  out_narrow_bed:
+    type: "File?"
+    outputBinding:
       glob: "*.bed.gz"
 
 baseCommand:

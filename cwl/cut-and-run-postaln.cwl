@@ -46,6 +46,11 @@ outputs:
     type: "File?"
 
   -
+    id: "#out_narrow_bed"
+    outputSource: "#peak/out_narrow_bed"
+    type: "File?"
+
+  -
     id: "#out_bw"
     outputSource: "#viz/out_bw"
     type: "File?"
@@ -120,4 +125,6 @@ steps:
     out:
       -
         id: "#peak/out_bedg"
+      -
+        id: "#peak/out_narrow_bed"
     run: "peak.cwl"

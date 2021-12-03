@@ -44,10 +44,19 @@ then
 fi
 
 # call SEACR with given settings
-/usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks > $outdir/$out.logs
-gzip -f $outdir/$out.$norm.peaks.$stringency.bed
+if ! /usr/local/bin/SEACR/SEACR_1.3.sh $bedgr $control $norm $stringency $outdir/$out.$norm.peaks.tmp > $outdir/$out.logs; then
+	echo "SEACR encountered an error. Please reference the logs:"
+	cat $outdir/$out.logs
+fi
+
+# split into two files
+awk 'BEGIN{OFS="\t"}{print $1,$2,$3,$4}' $outdir/$out.$norm.peaks.tmp.$stringency.bed > $outdir/$out.$norm.peaks.$stringency.bedgraph
+awk -F '[\t:-]' 'BEGIN{OFS="\t"}{print $6, $7, $8}' $outdir/$out.$norm.peaks.tmp.$stringency.bed > $outdir/$out.$norm.peaks.narrow.bed
+
+gzip -f $outdir/$out.$norm.peaks.$stringency.bedgraph $outdir/$out.$norm.peaks.narrow.bed
 
 # remove temporary files
+rm -f $outdir/$out.$norm.peaks.tmp.$stringency.bed
 if $two_bgs
 then
     rm -f $bedgr
