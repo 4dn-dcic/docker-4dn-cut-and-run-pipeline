@@ -34,6 +34,7 @@ ENV PATH=/usr/local/bin/:$PATH
 
 RUN pip3 install numpy==1.18.5
 RUN pip3 install scipy==1.4
+RUN pip3 install pandas=0.24.2
 COPY downloads.sh . 
 RUN chmod +x downloads.sh && \
     . downloads.sh && \
