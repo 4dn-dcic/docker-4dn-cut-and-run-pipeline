@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 import os
-import csv
 import argparse
 import numpy as np
 import pandas as pd
@@ -42,12 +41,15 @@ def main(args):
         nz = np.nonzero(a)
         sig_loc = np.array(itemgetter(*nz)(a))
 
-	# save the output in bedgraph format
+        # create an array with chr name (for easy np stacking)
+        repeat_chr=np.full((len(nz[0]),1),chrm)
+
+        # base locations are in nz, each signal is for a single point in chr
+        textarray = np.column_stack((repeat_chr,nz[0],np.add(nz[0],1),sig_loc))
+
+        # save the output in bedgraph format
         with open(out,'a') as f:
-            write_out = csv.writer(f,delimiter='\t')
-            for i in range(len(sig_loc)):
-                # base locations are in nz, each signal is for a single point in chr
-                write_out.writerow([chrm,nz[0][i],np.add(nz[0][i],1),sig_loc[i]])
+            np.savetxt(f,textarray,delimiter="\t",fmt="%s")
 
 
 
