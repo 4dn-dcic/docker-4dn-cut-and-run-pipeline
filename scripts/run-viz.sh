@@ -22,12 +22,15 @@ base=${bedpe%.gz}
 # call gaussian smoother
 if ! python3 /usr/local/bin/call_gauss.py --in_bedpe ${base} --chr_sizes $chr_sizes --outname $outdir/$out.bedgraph --base_direc $base_direc; then
 	echo "The gaussian smoother encountered an error"
-    rm -f $outdir/$out.bedgraph
+        rm -f $outdir/$out.bedgraph
+        exit 1
+
 fi
 
 if ! /usr/local/bin/bedGraphToBigWig $outdir/$out.bedgraph $chr_sizes $outdir/${out}.bw; then
 	echo "bedGraphToBigWig encountered an error"
-    rm -f $outdir/$out.bw
+        rm -f $outdir/$out.bw
+        exit 1
 fi
 
 gzip -f $outdir/$out.bedgraph
