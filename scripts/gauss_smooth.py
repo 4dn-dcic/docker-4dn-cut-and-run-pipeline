@@ -19,13 +19,9 @@ def gauss_smooth(start, end, reads, bandwidth, chrLength, normR=1, *weights):
         print("Read/start/end count mismatch")
         sys.exit()
 
-    spread = 6*bandwidth
-    half_spread = bandwidth*3
-
-
     counts = np.bincount((start+end)//2)
 
     KDE = gaussian_filter(counts.astype(float), sigma=bandwidth)
 
-    return(KDE*10)
+    return(KDE)
 
